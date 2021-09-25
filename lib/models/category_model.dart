@@ -4,3 +4,4 @@ class CategoryModel {
 
   CategoryModel(this.categoryName, this.imageUrl);
 }
+
