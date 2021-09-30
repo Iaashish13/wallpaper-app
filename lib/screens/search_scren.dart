@@ -1,39 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:wallpaper_app/helper/category_data.dart';
 import 'package:wallpaper_app/helper/networking.dart';
-import 'package:wallpaper_app/models/category_model.dart';
 import 'package:wallpaper_app/models/photos_model.dart';
-import 'package:wallpaper_app/screens/search_scren.dart';
-
-
-import 'package:wallpaper_app/widget/category_tile.dart';
 import 'package:wallpaper_app/widget/used_widgets.dart';
 import 'package:wallpaper_app/widget/wallpaper_tile.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({Key? key, required this.searchQuery}) : super(key: key);
+  final String searchQuery;
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  List<CategoryModel> _categories = List<CategoryModel>.empty(growable: true);
+class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _categories = getCategories();
-  }
-
+  // @override
+  // void initState() {
+  //   Services().getSearchedPhotos(widget.searchQuery);
+  //   super.initState();
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: appBarTitle(),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white24,
+        centerTitle: true,
         elevation: 0.0,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.black,
+          ),
+        ),
+        actions: <Widget>[
+          Opacity(
+            opacity: 0,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: const Icon((Icons.save)),
+            ),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
@@ -69,13 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         splashColor: Colors.grey,
                         onTap: () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SearchScreen(
-                                searchQuery: _searchController.text,
-                              ),
-                            ),
-                          );
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchScreen(
+                                      searchQuery: _searchController.text)));
                         },
                         child: const Icon(
                           Icons.search,
@@ -90,38 +98,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 24.0,
               ),
               Container(
-                height: 80.0,
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: ListView.builder(
-                    itemCount: _categories.length,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return CategoryTile(
-                          name: _categories[index].categoryName,
-                          imageUrl: _categories[index].imageUrl);
-                    }),
-              ),
-              const SizedBox(
-                height: 24.0,
-              ),
-              Container(
                 margin: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: FutureBuilder<PhotoModel?>(
-                  future: Services().getPhotos(),
+                  future: Services().getSearchedPhotos(widget.searchQuery),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return GridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: snapshot.data!.photos!.length,
                           scrollDirection: Axis.vertical,
+                          itemCount: snapshot.data!.photos!.length,
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
                             crossAxisSpacing: 10.0,
                             mainAxisSpacing: 10.0,
                             childAspectRatio: 0.7,
-                            crossAxisCount: 2,
                           ),
                           itemBuilder: (context, index) {
                             return WallpaperTile(
