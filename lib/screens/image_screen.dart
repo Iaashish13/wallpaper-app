@@ -146,9 +146,14 @@ class _ImageScreenState extends State<ImageScreen> {
                 const SizedBox(
                   height: 16.0,
                 ),
-                const Text(
-                  'Cancel',
-                  style: TextStyle(color: Colors.white, fontSize: 22.0),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(color: Colors.white, fontSize: 22.0),
+                  ),
                 ),
                 const SizedBox(
                   height: 36.0,

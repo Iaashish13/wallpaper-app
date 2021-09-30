@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:wallpaper_app/screens/category_screen.dart';
 
 
@@ -34,11 +35,19 @@ class CategoryTile extends StatelessWidget {
               left: 30,
               child: Text(
                 name,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
+                style: GoogleFonts.oswald(
+                 textStyle:const TextStyle(
+                   color: Colors.white,
+                   fontSize: 20.0,
+               fontWeight: FontWeight.w500,
+                 ),
+                  
                 ),
+                // style: const TextStyle(
+                //   color: Colors.white,
+                //   fontSize: 20.0,
+                //   fontWeight: FontWeight.bold,
+                // ),
               ),
             ),
           ],

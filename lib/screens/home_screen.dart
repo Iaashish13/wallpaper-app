@@ -53,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Expanded(
                       child: TextField(
                         controller: _searchController,
+                      
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Search..',
@@ -76,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           );
+                       
                         },
                         child: const Icon(
                           Icons.search,

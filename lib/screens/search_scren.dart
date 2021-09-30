@@ -84,6 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               MaterialPageRoute(
                                   builder: (context) => SearchScreen(
                                       searchQuery: _searchController.text)));
+                                      
                         },
                         child: const Icon(
                           Icons.search,
